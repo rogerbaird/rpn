@@ -1,20 +1,20 @@
 package me.rtb
 
 abstract class Token {
-    abstract fun eval(s: Memory,  out: (Any)->Unit) : Boolean
+    abstract fun eval(mem: Memory,  out: (Any)->Unit) : Boolean
 
-    fun reduceOperation( s: Memory, initial: Double, op: (Double,Double)->Double) {
+    fun reduceOperation( mem: Memory, initial: Double, op: (Double,Double)->Double) {
 
-        if (!s.stack.isEmpty()) {
+        if (!mem.stack.isEmpty()) {
             var agg = initial
-            while (!s.stack.isEmpty())
-                agg = op.invoke(agg, s.stack.pop())
-            s.stack.push(agg)
+            while (!mem.stack.isEmpty())
+                agg = op.invoke(agg, mem.stack.pop())
+            mem.stack.push(agg)
         }
     }
 
-    fun unaryOperation( s: Memory, op: (Double)->Double) {
-        s.stack.push(op(s.stack.pop()))
+    fun unaryOperation( mem: Memory, op: (Double)->Double) {
+        mem.stack.push(op(mem.stack.pop()))
     }
 
     fun binaryOperation( s: Memory, op: (Double,Double)->Double) {
