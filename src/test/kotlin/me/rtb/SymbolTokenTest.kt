@@ -82,12 +82,37 @@ class SymbolTokenTest {
     }
 
     @Test
+    fun `fv`() {
+        mem.stack.push(1000.0)
+        mem.stack.push(0.1)
+        mem.stack.push(2.0)
+        mem.stack.push(3.0)
+        assertFalse(SymbolToken("fv").eval(mem) {})
+        assertEquals(1340.0956, mem.stack.pop(), 0.001)
+    }
+
+    @Test
     fun `hex`() {
         val output = mutableListOf<String>()
         writer = { output.add(it.toString()) }
         mem.stack.push(2.0)
         assertFalse(SymbolToken("hex").eval(mem, writer))
         assertEquals("[0x2]", output[0])
+    }
+
+    @Test
+    fun `if`() {
+        mem.stack.push(0.0)
+        mem.stack.push(10.0)
+        mem.stack.push(20.0)
+        assertFalse(SymbolToken("if").eval(mem) {})
+        assertEquals(20.0, mem.stack.peek(), 0.001)
+        mem.stack.clear()
+        mem.stack.push(1.0)
+        mem.stack.push(10.0)
+        mem.stack.push(20.0)
+        assertFalse(SymbolToken("if").eval(mem) {})
+        assertEquals(10.0, mem.stack.peek(), 0.001)
     }
 
     @Test
@@ -147,6 +172,16 @@ class SymbolTokenTest {
         mem.stack.push(4.0)
         assertFalse(SymbolToken("product").eval(mem) {})
         assertEquals(24.0, mem.stack.peek(), Double.MIN_VALUE)
+    }
+
+    @Test
+    fun `pv`() {
+        mem.stack.push(1000.0)
+        mem.stack.push(0.1)
+        mem.stack.push(2.0)
+        mem.stack.push(3.0)
+        assertFalse(SymbolToken("pv").eval(mem) {})
+        assertEquals(746.2153, mem.stack.pop(), 0.001)
     }
 
     @Test

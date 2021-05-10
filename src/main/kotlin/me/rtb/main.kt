@@ -3,8 +3,9 @@ package me.rtb
 
 import java.math.MathContext
 
-var reader = {readLine()!!}
-var writer : (Any)->Unit = {x->if (x==":") print(x) else println(x)}
+var reader = { readLine() ?: "exit" }
+var writer : (Any)->Unit = {x->if (x==":") System.out.print(x) else System.out.println(x)}
+var ewriter : (Any)->Unit = {x->if (x==":") System.err.print(x) else System.err.println(x)}
 val memory = Memory()
 
 fun main(args: Array<String>) {
@@ -13,7 +14,7 @@ fun main(args: Array<String>) {
         runBatch(args.joinToString (separator=" "))
     }
     else {
-        writer("RPN Calculator version 1.0")
+        ewriter("RPN Calculator version 1.0")
         runInterpreter ()
     }
 }
@@ -24,11 +25,12 @@ fun runBatch( cmd : String ) {
 }
 
 fun runInterpreter(){
-
-    while(true) {
-        writer(":")
-        Tokenizer().tokenize(reader.invoke())
-            .forEach { if (it.eval(memory, writer)) return }
+    var exitFlag = false
+    while(!exitFlag) {
+        ewriter(":")
+        exitFlag = Tokenizer().tokenize(reader.invoke())
+            .map { it.eval(memory, writer) }
+            .firstOrNull() ?: false
         printTop()
     }
 }
@@ -45,3 +47,4 @@ fun printTop() {
     else
         writer("<empty>")
 }
+

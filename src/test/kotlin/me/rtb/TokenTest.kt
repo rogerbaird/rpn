@@ -40,6 +40,28 @@ class TokenTest {
         }
     }
 
+    @Test
+    fun ternaryOperation() {
+        val mem = Memory()
+        mem.stack.push(2.0)
+        mem.stack.push(3.0)
+        mem.stack.push(4.0)
+        TestToken().ternaryOperation(mem){ a, b, c->a*b*c}.also {
+            assertEquals( 24.0, mem.stack.peek(), Double.MIN_VALUE)
+        }
+    }
+
+    @Test
+    fun quaternaryOperation() {
+        val mem = Memory()
+        mem.stack.push(2.0)
+        mem.stack.push(3.0)
+        mem.stack.push(4.0)
+        mem.stack.push(1.0)
+        TestToken().quaternaryOperation(mem){ a, b, c, d->a*b*c-d}.also {
+            assertEquals( 23.0, mem.stack.peek(), Double.MIN_VALUE)
+        }
+    }
 
     @Test
     fun swap() {

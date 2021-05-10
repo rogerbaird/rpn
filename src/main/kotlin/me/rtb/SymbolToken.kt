@@ -17,17 +17,18 @@ data class SymbolToken( private val symbol: String) : Token() {
             "clear" -> mem.stack.clear()
             "copy" -> mem.stackMap.getOrDefault(mem.stack.pop().toInt(), Stack<Double>()).push(mem.stack.peek())
             "cos" -> unaryOperation(mem, Math::cos)
-            "deg" -> unaryOperation(mem) { n1->n1*180/Math.PI}
+            "deg" -> unaryOperation(mem) { n1->n1*180/Math.PI }
             "dup" -> mem.stack.push(mem.stack.peek())
             "e" -> mem.stack.push(Math.E)
             "exit" -> return true
+            "if" -> ternaryOperation(mem) { n1, n2, n3->if (n1.equals(0.0)) n3 else n2}
             "fv" -> quaternaryOperation(mem) {pv,i,n,t -> pv*((1.0+(i/n)).pow(n*t))}
             "hex" -> out.invoke("[0x${mem.stack.peek().toULong().toString(16)}]")
             "inv" -> unaryOperation(mem) { n1->1.0/n1}
-            "ln" -> unaryOperation(mem) { n1->ln(n1)}
-            "log" -> binaryOperation(mem) { n1, n2-> log(n1,n2)}
-            "log2" -> unaryOperation(mem) { n1-> log2(n1)}
-            "neg" -> unaryOperation(mem) { n1->-1.0*n1}
+            "ln" -> unaryOperation(mem) { n1->ln(n1) }
+            "log" -> binaryOperation(mem) { n1, n2-> log(n1,n2) }
+            "log2" -> unaryOperation(mem) { n1-> log2(n1) }
+            "neg" -> unaryOperation(mem) { n1->-1.0*n1 }
             "pi" -> mem.stack.push(Math.PI)
             "pop" -> mem.stack.pop()
             "product" -> reduceOperation(mem, 1.0){ x, y->x*y}

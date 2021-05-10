@@ -23,11 +23,11 @@ abstract class Token {
         s.stack.push(op(n1,n2))
     }
 
-    fun trinaryOperation( s: Memory, op: (Double,Double,Double)->Double) {
+    fun ternaryOperation(s: Memory, op: (Double, Double, Double)->Double) {
         val n3 = s.stack.pop()
         val n2 = s.stack.pop()
         val n1 = s.stack.pop()
-        s.stack.push(op(n2,n1,n3))
+        s.stack.push(op(n1,n2,n3))
     }
 
     fun quaternaryOperation( s: Memory, op: (Double,Double,Double,Double)->Double) {
