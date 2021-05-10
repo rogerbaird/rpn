@@ -37,11 +37,11 @@ fun printTop() {
     if (!memory.stack.empty()) {
         memory.stack.peek().also {
             if (it.isNaN())
-                writer("[NaN]")
+                writer("NaN")
             else
-                writer("[${it.toBigDecimal(MathContext.DECIMAL128).toPlainString()}]")
+                writer("${it.toBigDecimal(MathContext.DECIMAL128).toPlainString()}")
         }
     }
     else
-        writer("[]")
+        writer("<empty>")
 }

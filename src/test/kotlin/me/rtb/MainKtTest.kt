@@ -14,7 +14,7 @@ class MainKtTest {
         writer = {output.add(it.toString())}
         main(arrayOf())
         assertEquals(1.2, memory.stack.peek(), Double.MIN_VALUE)
-        assertEquals("[1.2]", output[2])
+        assertEquals("1.2", output[2])
     }
 
     @Test
@@ -24,7 +24,7 @@ class MainKtTest {
         memory.stack.clear()
         memory.stack.push(Double.NaN)
         printTop()
-        assertEquals("[NaN]", output[0])
+        assertEquals("NaN", output[0])
     }
 
     @Test
@@ -33,6 +33,6 @@ class MainKtTest {
         writer = {output.add(it.toString())}
         memory.stack.clear()
         printTop()
-        assertEquals("[]", output[0])
+        assertEquals("<empty>", output[0])
     }
 }

@@ -5,6 +5,7 @@ import java.util.*
 import kotlin.math.ln
 import kotlin.math.log
 import kotlin.math.log2
+import kotlin.math.pow
 
 data class SymbolToken( private val symbol: String) : Token() {
     override fun eval(mem: Memory, out: (Any)->Unit) : Boolean {
@@ -20,6 +21,7 @@ data class SymbolToken( private val symbol: String) : Token() {
             "dup" -> mem.stack.push(mem.stack.peek())
             "e" -> mem.stack.push(Math.E)
             "exit" -> return true
+            "fv" -> quaternaryOperation(mem) {pv,i,n,t -> pv*((1.0+(i/n)).pow(n*t))}
             "hex" -> out.invoke("[0x${mem.stack.peek().toULong().toString(16)}]")
             "inv" -> unaryOperation(mem) { n1->1.0/n1}
             "ln" -> unaryOperation(mem) { n1->ln(n1)}
@@ -29,6 +31,7 @@ data class SymbolToken( private val symbol: String) : Token() {
             "pi" -> mem.stack.push(Math.PI)
             "pop" -> mem.stack.pop()
             "product" -> reduceOperation(mem, 1.0){ x, y->x*y}
+            "pv" -> quaternaryOperation(mem) {fv,i,n,t -> fv/((1.0+(i/n)).pow(n*t))}
             "rad" -> unaryOperation(mem) { n1->n1*Math.PI/180}
             "range" -> {
                 val high = mem.stack.pop().toInt()

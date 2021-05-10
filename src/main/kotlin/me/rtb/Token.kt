@@ -18,9 +18,24 @@ abstract class Token {
     }
 
     fun binaryOperation( s: Memory, op: (Double,Double)->Double) {
-        val n1 = s.stack.pop()
         val n2 = s.stack.pop()
-        s.stack.push(op(n2,n1))
+        val n1 = s.stack.pop()
+        s.stack.push(op(n1,n2))
+    }
+
+    fun trinaryOperation( s: Memory, op: (Double,Double,Double)->Double) {
+        val n3 = s.stack.pop()
+        val n2 = s.stack.pop()
+        val n1 = s.stack.pop()
+        s.stack.push(op(n2,n1,n3))
+    }
+
+    fun quaternaryOperation( s: Memory, op: (Double,Double,Double,Double)->Double) {
+        val n4 = s.stack.pop()
+        val n3 = s.stack.pop()
+        val n2 = s.stack.pop()
+        val n1 = s.stack.pop()
+        s.stack.push(op(n1,n2,n3,n4))
     }
 
     fun swap(a: Double, b: Double) : List<Double> { return listOf(b, a) }
