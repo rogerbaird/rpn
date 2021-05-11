@@ -30,7 +30,6 @@ class MainKtTest {
     fun `main with eof`() {
         val output = mutableListOf<String>()
         val inputs = mutableListOf("1.2", "exit")
-        val oldReader = reader
         memory.stack.clear()
         reader = { inputs.removeFirst() }
         writer = {output.add(it.toString())}
